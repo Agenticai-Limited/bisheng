@@ -382,6 +382,7 @@ export const modelProvider = [
     { "name": "Minimax", "value": "minimax" },
     { "name": "Anthropic", "value": "anthropic" },
     { "name": "MindIE", "value": "MindIE" },
+    { "name": "AWS Bedrock", "value": "bedrock" },
 ]
 const bishengModelProvider = { "name": "bishengRT", "value": "bisheng_rt" }
 

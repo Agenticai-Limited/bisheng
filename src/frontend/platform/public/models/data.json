@@ -95,6 +95,42 @@
             "model_type": "llm"
         }
     ],
+    "bedrock": [{
+            "name": "Claude Sonnet 4.5",
+            "model_name": "au.anthropic.claude-sonnet-4-5-20250929-v1:0",
+            "model_type": "llm"
+        },
+        {
+            "name": "Claude Haiku 4.5",
+            "model_name": "au.anthropic.claude-haiku-4-5-20251001-v1:0",
+            "model_type": "llm"
+        },
+        {
+            "name": "Claude Opus 4.5",
+            "model_name": "global.anthropic.claude-opus-4-5-20251101-v1:0",
+            "model_type": "llm"
+        },
+        {
+            "name": "Nova Pro",
+            "model_name": "apac.amazon.nova-pro-v1:0",
+            "model_type": "llm"
+        },
+        {
+            "name": "Nova Lite",
+            "model_name": "apac.amazon.nova-lite-v1:0",
+            "model_type": "llm"
+        },
+        {
+            "name": "Titan Embed V2",
+            "model_name": "amazon.titan-embed-text-v2:0",
+            "model_type": "embedding"
+        },
+        {
+            "name": "Cohere Embed V4",
+            "model_name": "global.cohere.embed-v4:0",
+            "model_type": "embedding"
+        }
+    ],
     "silicon": [{
             "name": "model 1",
             "model_name": "deepseek-ai/DeepSeek-R1",

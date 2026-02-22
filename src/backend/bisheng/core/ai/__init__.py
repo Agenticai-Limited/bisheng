@@ -9,6 +9,7 @@ from langchain_openai import ChatOpenAI, AzureChatOpenAI, OpenAIEmbeddings, Azur
 from .asr import OpenAIASRClient, AliyunASRClient, AzureOpenAIASRClient
 from .base import BaseASRClient, BaseTTSClient
 from .llm.chat_openai_compatible import ChatOpenAICompatible
+from .llm.custom_chat_bedrock import CustomChatBedrock
 from .rerank.common_rerank import CommonRerank
 from .rerank.xinference_rerank import XinferenceRerank
 from .tts import OpenAITTSClient, AliyunTTSClient, AzureOpenAITTSClient
@@ -43,5 +44,6 @@ __all__ = [
 
     'DashScopeRerank',
     'CommonRerank',
-    'XinferenceRerank'
+    'XinferenceRerank',
+    'CustomChatBedrock'
 ]

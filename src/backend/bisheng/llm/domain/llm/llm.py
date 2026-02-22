@@ -15,7 +15,7 @@ from typing_extensions import Self
 from bisheng.common.errcode.server import NoLlmModelConfigError, LlmModelConfigDeletedError, LlmProviderDeletedError, \
     LlmModelTypeError, LlmModelOfflineError, InitLlmError
 from bisheng.core.ai import ChatOllama, ChatOpenAI, ChatOpenAICompatible, \
-    AzureChatOpenAI, ChatZhipuAI, MiniMaxChat, ChatAnthropic, MoonshotChat
+    AzureChatOpenAI, ChatZhipuAI, MiniMaxChat, ChatAnthropic, MoonshotChat, CustomChatBedrock
 from bisheng.core.ai.llm.custom_chat_deepseek import CustomChatDeepSeek
 from bisheng.core.ai.llm.custom_chat_tongyi import CustomChatTongYi
 from bisheng.llm.domain.const import LLMModelType, LLMServerType
@@ -153,6 +153,27 @@ def _get_spark_params(params: dict, server_config: dict, model_config: dict) -> 
     return params
 
 
+def _get_bedrock_params(params: dict, server_config: dict, model_config: dict) -> dict:
+    params.update({
+        'region_name': server_config.get('region_name', 'us-east-1'),
+    })
+    credentials = {}
+    if server_config.get('aws_access_key_id'):
+        credentials['aws_access_key_id'] = server_config['aws_access_key_id']
+    if server_config.get('aws_secret_access_key'):
+        credentials['aws_secret_access_key'] = server_config['aws_secret_access_key']
+    if credentials:
+        params['credentials'] = credentials
+    # model field is already set by _get_default_params as 'model',
+    # ChatBedrockConverse expects 'model_id'
+    if 'model' in params:
+        params['model_id'] = params.pop('model')
+
+    user_kwargs = _get_user_kwargs(model_config)
+    user_kwargs.update(params)
+    return user_kwargs
+
+
 _llm_node_type: Dict = {
     # Open source inference framework
     LLMServerType.OLLAMA.value: {'client': ChatOllama, 'params_handler': _get_ollama_params},
@@ -175,6 +196,7 @@ _llm_node_type: Dict = {
     LLMServerType.VOLCENGINE.value: {'client': ChatOpenAICompatible, 'params_handler': _get_openai_params},
     LLMServerType.SILICON.value: {'client': ChatOpenAICompatible, 'params_handler': _get_openai_params},
     LLMServerType.MIND_IE.value: {'client': ChatOpenAICompatible, 'params_handler': _get_openai_params},
+    LLMServerType.BEDROCK.value: {'client': CustomChatBedrock, 'params_handler': _get_bedrock_params},
 }
 
 

@@ -319,6 +319,32 @@ const modelProviders = {
             key: "api_key",
         },
     ],
+    bedrock: [
+        {
+            label: "AWS Region",
+            type: "text",
+            placeholder: "e.g. us-east-1, ap-southeast-2",
+            default: "us-east-1",
+            required: true,
+            key: "region_name",
+        },
+        {
+            label: "AWS Access Key ID",
+            type: "password",
+            placeholder: "",
+            default: "",
+            required: true,
+            key: "aws_access_key_id",
+        },
+        {
+            label: "AWS Secret Access Key",
+            type: "password",
+            placeholder: "",
+            default: "",
+            required: true,
+            key: "aws_secret_access_key",
+        },
+    ],
     "silicon": [
         {
             label: "Base URL",

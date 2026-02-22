@@ -23,6 +23,7 @@ class LLMServerType(Enum):
     VOLCENGINE = 'volcengine'  # Large model of a volcanic engine
     SILICON = 'silicon'  # Silicon-based flow
     MIND_IE = 'MindIE'  # Ascendant Inference Engine MindIE
+    BEDROCK = 'bedrock'  # AWS Bedrock
 
 
 # Model Type Enumeration

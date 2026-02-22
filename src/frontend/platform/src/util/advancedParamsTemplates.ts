@@ -150,7 +150,14 @@ export interface AdvancedParams {
   },
   
   
-    'moonshot-llm': {
+    'bedrock-llm': {
+    "streaming": false,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "max_tokens": 4096
+  },
+
+  'moonshot-llm': {
       "cache": null,
       "disable_streaming": false,
       "http_client": null,
@@ -243,7 +250,8 @@ export interface AdvancedParams {
     'minimax': 'minimax-llm',
     'anthropic': 'anthropic-llm',
     'deepseek': 'deepseek-llm',
-    'moonshot': 'moonshot-llm' // 月之暗面
+    'moonshot': 'moonshot-llm', // 月之暗面
+    'bedrock': 'bedrock-llm'   // AWS Bedrock
   };
   
   // 模型类型到模板的映射 (Embedding)
@@ -260,7 +268,8 @@ export interface AdvancedParams {
     'silicon': 'silicon-embedding',
     'azure_openai': 'azure-embedding',
     'qwen': 'qwen-embedding',
-    'qianfan': 'qianfan-embedding'
+    'qianfan': 'qianfan-embedding',
+    'bedrock': 'openai-embedding'  // AWS Bedrock embedding uses default template
   };
   
   // 获取指定模型类型和模型类别的模板
