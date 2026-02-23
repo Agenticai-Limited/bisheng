@@ -154,16 +154,11 @@ def _get_spark_params(params: dict, server_config: dict, model_config: dict) -> 
 
 
 def _get_bedrock_params(params: dict, server_config: dict, model_config: dict) -> dict:
-    params.update({
-        'region_name': server_config.get('region_name', 'us-east-1'),
-    })
-    credentials = {}
+    params['region_name'] = server_config.get('region_name', 'us-east-1')
     if server_config.get('aws_access_key_id'):
-        credentials['aws_access_key_id'] = server_config['aws_access_key_id']
+        params['aws_access_key_id'] = server_config['aws_access_key_id']
     if server_config.get('aws_secret_access_key'):
-        credentials['aws_secret_access_key'] = server_config['aws_secret_access_key']
-    if credentials:
-        params['credentials'] = credentials
+        params['aws_secret_access_key'] = server_config['aws_secret_access_key']
     # model field is already set by _get_default_params as 'model',
     # ChatBedrockConverse expects 'model_id'
     if 'model' in params:
