@@ -159,10 +159,17 @@ def _get_bedrock_params(params: dict, server_config: dict, model_config: dict) -
         params['aws_access_key_id'] = server_config['aws_access_key_id']
     if server_config.get('aws_secret_access_key'):
         params['aws_secret_access_key'] = server_config['aws_secret_access_key']
-    # model field is already set by _get_default_params as 'model',
-    # ChatBedrockConverse expects 'model_id'
+
+    # ChatBedrockConverse expects 'model_id', not 'model'
     if 'model' in params:
         params['model_id'] = params.pop('model')
+
+    # Filter out params that ChatBedrockConverse doesn't recognize as fields.
+    # Unrecognized params get forwarded to additionalModelRequestFields,
+    # which causes Bedrock Converse API to reject the request.
+    _non_native_keys = {'streaming'}
+    for key in _non_native_keys:
+        params.pop(key, None)
 
     user_kwargs = _get_user_kwargs(model_config)
     user_kwargs.update(params)
