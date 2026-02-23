@@ -255,10 +255,17 @@ class AssistantService(BaseService, AssistantUtils):
         # Streaming Generation Prompts
         final_prompt = ''
         async for one_prompt in auto_agent.optimize_assistant_prompt():
-            if one_prompt.content in ('```', 'markdown'):
+            # Bedrock returns content as list of content blocks, normalize to str
+            content = one_prompt.content
+            if isinstance(content, list):
+                content = ''.join(
+                    block.get('text', '') if isinstance(block, dict) else str(block)
+                    for block in content
+                )
+            if content in ('```', 'markdown'):
                 continue
-            yield str(StreamData(event='message', data={'type': 'prompt', 'message': one_prompt.content}))
-            final_prompt += one_prompt.content
+            yield str(StreamData(event='message', data={'type': 'prompt', 'message': content}))
+            final_prompt += content
         assistant.prompt = final_prompt
         yield str(StreamData(event='message', data={'type': 'end', 'message': ""}))
 
