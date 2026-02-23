@@ -8,6 +8,7 @@ from pydantic import Field
 from typing_extensions import Self
 
 from bisheng.core.ai import OllamaEmbeddings, OpenAIEmbeddings, AzureOpenAIEmbeddings, DashScopeEmbeddings
+from langchain_aws import BedrockEmbeddings
 from bisheng.llm.domain.const import LLMServerType, LLMModelType
 from .base import BishengBase
 from ..models import LLMModel, LLMServer
@@ -66,6 +67,24 @@ def _get_qwen_params(params: dict, server_config: dict, model_config: dict) -> d
     return user_kwargs
 
 
+def _get_bedrock_params(params: dict, server_config: dict, model_config: dict) -> dict:
+    params['region_name'] = server_config.get('region_name', 'us-east-1')
+    if server_config.get('aws_access_key_id'):
+        params['aws_access_key_id'] = server_config['aws_access_key_id']
+    if server_config.get('aws_secret_access_key'):
+        params['aws_secret_access_key'] = server_config['aws_secret_access_key']
+    if server_config.get('aws_session_token'):
+        params['aws_session_token'] = server_config['aws_session_token']
+    if 'model' in params:
+        params['model_id'] = params.pop('model')
+    for key in ['streaming', 'temperature', 'max_tokens']:
+        params.pop(key, None)
+
+    user_kwargs = _get_user_kwargs(model_config)
+    user_kwargs.update(params)
+    return user_kwargs
+
+
 _node_type: Dict = {
     # Open source inference framework
     LLMServerType.OLLAMA.value: {"client": OllamaEmbeddings, "params_handler": _get_ollama_params},
@@ -83,6 +102,9 @@ _node_type: Dict = {
     LLMServerType.TENCENT.value: {"client": OpenAIEmbeddings, "params_handler": _get_openai_params},
     LLMServerType.VOLCENGINE.value: {"client": OpenAIEmbeddings, "params_handler": _get_openai_params},
     LLMServerType.SILICON.value: {"client": OpenAIEmbeddings, "params_handler": _get_openai_params},
+
+    # AWS
+    LLMServerType.BEDROCK.value: {"client": BedrockEmbeddings, "params_handler": _get_bedrock_params},
 }
 
 
