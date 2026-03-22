@@ -1,8 +1,8 @@
 window.BRAND_CONFIG = {
     // 1. 系统品牌名称
     brandName: {
-        zh: "BISHENG",
-        en: "BISHENG"
+        zh: "Nova",
+        en: "Nova"
     },
 
     // 2. 灵思智能体
