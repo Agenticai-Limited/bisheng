@@ -1247,5 +1247,29 @@ mysql -h HOST -u root -pPASS bisheng -N --raw \
 
 ---
 
-*Document generated: March 17, 2026*
+## 24. AWS Dev Environment
+
+The development environment is deployed on AWS:
+
+| Item | Value |
+|------|-------|
+| **AWS Account** | `432629721957` |
+| **EC2 Instance** | `i-01f9fb0c0a9b6992c` |
+| **IP Address** | `3.104.109.160` |
+| **URL** | http://3.104.109.160:3001/ |
+| **Login Email** | `mike.pang@agenticai.nz` |
+| **Login Password** | `euyRty@12` |
+
+---
+
+## 25. Pending Items
+
+1. **Rebrand Bisheng to Nova** — Replace the logo and name with our own branding (e.g., login page, sidebar logo, browser tab title). Config and logo images have been prepared on the `feature/dev` branch but the frontend Docker image needs to be rebuilt.
+2. **Configure a dedicated domain for client testing** — Currently accessed via raw IP (`3.104.109.160:3001`). A proper domain name needs to be set up.
+3. **Integrate PH0006 (Fraternal Bond) API** — 8 of 9 required Phoenix APIs are integrated. PH0006 is pending — Scott has not yet created the backend service. Once available, integrate it into the `code_phoenixApi.py` workflow node.
+4. **Optimise login session management** — The current session handling needs improvement. Implement a globally maintained session with proper timeout, refresh, and state management across the workflow.
+
+---
+
+*Document generated: March 17, 2026 | Updated: March 25, 2026*
 *For questions, contact the development team.*
